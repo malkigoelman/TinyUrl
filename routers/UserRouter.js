@@ -1,12 +1,16 @@
 import express from 'express';
 import UsersController from '../controllers/UsersController.js';
+import authenticateJWT from '../jwt.js';
 
 const router = express.Router();
 
-router.get('/', UsersController.getAll);
-router.get('/:id', UsersController.getById);
-router.post('/', UsersController.create);
-router.put('/:id', UsersController.update);
-router.delete('/:id', UsersController.delete);
+router.get('/',authenticateJWT, UsersController.getAll);
+router.get('/:id',authenticateJWT, UsersController.getById);
+router.post('/',authenticateJWT, UsersController.create);
+router.put('/:id',authenticateJWT, UsersController.update);
+router.delete('/:id',authenticateJWT, UsersController.delete);
+
+router.post('/register', UsersController.register);
+router.post('/login', UsersController.login);
 
 export default router;
